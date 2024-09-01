@@ -2,5 +2,4 @@ coke: 6; ss
 seasons: 18; sc
 forevermore: 18; vc
 dinner: 588; sc, vc, sk, ss, sa, ss1
-tax: 67.09
-tip: 126
+total: 823.09
