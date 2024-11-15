@@ -4,8 +4,7 @@ config = None
 with open('./config.txt', 'r') as f:
     config = f.readlines()
 
-tax = 0
-tip = 0
+total = 0
 items = []
 for line in config:
     if line == '':
@@ -14,11 +13,8 @@ for line in config:
     print(line.strip())
     split_colon = [s.strip() for s in line.split(':')]
 
-    if split_colon[0] == 'tax':
-        tax = float(split_colon[1])
-        continue
-    elif split_colon[0] == 'tip':
-        tip = float(split_colon[1])
+    if split_colon[0] == 'total':
+        total = float(split_colon[1])
         continue
 
     split_semi_colon = [s.strip() for s in split_colon[1].split(';')]
@@ -37,9 +33,6 @@ for item in items:
 
 subtotal = sum([item['price'] for item in items])
 print('subtotal', "%.2f" % subtotal)
-print('tax', "%.2f" % tax)
-print('tip', "%.2f" % tip)
-total = subtotal + tax + tip
 print('total', "%.2f" % total, '\n')
 
 total_people_to_price = defaultdict(float)
