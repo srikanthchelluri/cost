@@ -1,5 +1,18 @@
-coke: 6; ss
-seasons: 18; sc
-forevermore: 18; vc
-dinner: 588; sc, vc, sk, ss, sa, ss1
-total: 823.09
+2 royal sour: 38; sc pr
+3 mule: 57; tp pt sp
+4 taj majal: 40; as gv
+1 taj mahal: 10; sp
+dahi puri: 14; all
+pani puri: 12; all
+ghost chilli tikka: 16; sc sp tp
+cauliflower: 19; all
+paneer pasada: 24; all
+saag paneer: 24; all
+malai kofta: 24; all
+eggplant bharta: 22; all
+chicken biryani: 24; sc gv tp sp
+family naan: 24; all
+plain rice: 6; all
+chilli naan: 7; all
+garlic naan: 7; all
+total: 474.27

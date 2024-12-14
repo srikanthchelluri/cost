@@ -1,43 +1,43 @@
 from collections import defaultdict
 
-config = None
+# Read and parse config
 with open('./config.txt', 'r') as f:
-    config = f.readlines()
+    config = [line.strip() for line in f if line.strip()]
 
 total = 0
 items = []
 for line in config:
-    if line == '':
-        continue
+    key, value = map(str.strip, line.split(':'))
+    if key == 'total':
+        total = float(value)
+    else:
+        price, people = map(str.strip, value.split(';'))
+        items.append({
+            'name': key,
+            'price': float(price),
+            'people': 'all' if people == 'all' else [p.strip() for p in people.split(' ')]
+        })
 
-    print(line.strip())
-    split_colon = [s.strip() for s in line.split(':')]
+# Determine unique people
+all_people = list(set(p for item in items for p in (item['people'] if item['people'] != 'all' else [])))
 
-    if split_colon[0] == 'total':
-        total = float(split_colon[1])
-        continue
-
-    split_semi_colon = [s.strip() for s in split_colon[1].split(';')]
-    items.append({
-        'name': split_colon[0],
-        'price': float(split_semi_colon[0]),
-        'people': [s.strip() for s in split_semi_colon[1].split(',')]
-    })
-print()
-
+# Calculate subtotals
 subtotal_people_to_price = defaultdict(float)
 for item in items:
-    price_per_person = item['price'] / len(item['people'])
-    for person in item['people']:
+    people = all_people if item['people'] == 'all' else item['people']
+    price_per_person = item['price'] / len(people)
+    for person in people:
         subtotal_people_to_price[person] += price_per_person
 
-subtotal = sum([item['price'] for item in items])
-print('subtotal', "%.2f" % subtotal)
-print('total', "%.2f" % total, '\n')
+# Calculate total
+subtotal = sum(item['price'] for item in items)
+total_people_to_price = {
+    person: (person_subtotal / subtotal) * total
+    for person, person_subtotal in subtotal_people_to_price.items()
+}
 
-total_people_to_price = defaultdict(float)
-for person, person_subtotal_price in subtotal_people_to_price.items():
-    total_people_to_price[person] = (person_subtotal_price / subtotal) * total
-
+# Print results
+print(f"subtotal: {subtotal:.2f}")
+print(f"total: {total:.2f}\n")
 for person, person_total_price in total_people_to_price.items():
-    print(person, "%.2f" % round(person_total_price, 2))
+    print(f"{person}: {person_total_price:.2f}")
